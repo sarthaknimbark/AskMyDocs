@@ -1,0 +1,9 @@
+# requirements.txt
+streamlit
+firebase-admin
+langchain
+faiss-cpu
+huggingface-hub
+sentence-transformers
+transformers
+python-dotenv

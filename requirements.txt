@@ -8,4 +8,5 @@ transformers
 python-dotenv
 PyPDF2
 google-generativeai
-PyTorch
+torch==2.0.1 
+rich==14.0.0       

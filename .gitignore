@@ -1,58 +1,12 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-
-# Virtual environment
+*.egg-info/
+env/
 venv/
-.env
 
-# dotenv environment files
-.env.*
-.env
-
-# Streamlit secrets (only if stored locally – recommended: use Streamlit Cloud secrets)
+# Streamlit
 .streamlit/secrets.toml
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
-
-# PyInstaller
-dist/
-build/
-*.spec
-
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# VS Code
-.vscode/
-
-# PyCharm
-.idea/
-
-# Logs
-*.log
-
-# Cache
-.cache/
-*.pyc
-*.pyo
-*.pyd
-
-# Local test data
-*.sqlite3
-db.sqlite3
-
-# Misc
-*.bak
-*.swp
-*.swo
-
-# Node modules (if you're using npm for anything frontend)
-node_modules/
+# Environment
+.env

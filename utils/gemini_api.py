@@ -20,14 +20,16 @@ Answer:"""
     # Define a retry strategy in case of timeout or failure
     retry_strategy = Retry(
         initial=10.0,  # Initial retry delay (seconds)
-        maximum=60.0,  # Maximum retry delay (seconds)
-        multiplier=1.5,  # Multiplier for increasing retry delay
-        deadline=180.0  # Total time to retry before giving up (seconds)
+        maximum=120.0,  # Maximum retry delay (seconds)
+        multiplier=2.0,  # Multiplier for increasing retry delay
+        deadline=300.0  # Total time to retry before giving up (seconds)
     )
     
     try:
         # Attempt to generate content with retries
+        print(f"Attempting to generate content with prompt: {prompt[:100]}...")  # Log the prompt for debugging
         response = model.generate_content(prompt, retry=retry_strategy)
+        print(f"Response received: {response.text[:100]}...")  # Log the response for debugging
         return response.text.strip()
     except DeadlineExceeded as e:
         # Log the timeout error
@@ -35,6 +37,5 @@ Answer:"""
         return "Sorry, the request timed out. Please try again later."
     except Exception as e:
         # Log any other error
-        print(f"Error: An unexpected error occurred. {e}")
+        print(f"Error: An unexpected error occurred: {e}")
         return "An error occurred. Please try again later."
-

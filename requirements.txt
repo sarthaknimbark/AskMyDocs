@@ -8,8 +8,3 @@ transformers
 python-dotenv
 PyPDF2
 google-generativeai
-torch==2.0.1 
-rich==14.0.0       
-markdown-it-py==3.0.0   # Markdown parser for Streamlit
-pygments==2.19.1       # Syntax highlighting for Streamlit
-mdurl==0.1.2           # For markdown-it-py

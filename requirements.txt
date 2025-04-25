@@ -8,3 +8,4 @@ transformers
 python-dotenv
 PyPDF2
 google-generativeai
+torch

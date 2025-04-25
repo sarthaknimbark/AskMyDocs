@@ -1,10 +1,9 @@
 streamlit==1.15.0
-firebase-admin==5.2.0
 langchain==0.0.187
+langchain-community==0.0.21
 faiss-cpu==1.7.2
 huggingface-hub==0.16.4
 sentence-transformers==2.2.0
 transformers==4.23.1
 python-dotenv==0.19.2
 PyPDF2==1.26.0
-langchain-community==0.0.21

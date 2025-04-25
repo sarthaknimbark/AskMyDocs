@@ -10,8 +10,6 @@ body {
     text-align: center;
     padding: 1.5rem;
     background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-
-
     color: white;
     border-radius: 10px;
     margin-bottom: 1.5rem;

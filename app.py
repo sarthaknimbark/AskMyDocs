@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import streamlit as st
+from langchain_community.vectorstores import FAISS
 
 from htmlTemplates.css import css
 from htmlTemplates.header import header

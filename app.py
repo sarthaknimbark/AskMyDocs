@@ -62,13 +62,13 @@ def main():
             if st.button("⚡ Process PDFs", use_container_width=True):
                 with st.spinner("Extracting text & building index..."):
                     # Extract text with page tracking
-                    raw_text, page_count = get_pdf_text(pdf_docs)
+                    pages, page_count = get_pdf_text(pdf_docs)
 
-                    if not raw_text.strip():
+                    if not pages:
                         st.error("❌ No text could be extracted from the uploaded PDFs.")
                     else:
-                        # Chunk and index
-                        text_chunks = get_text_chunks(raw_text)
+                        # Chunk and index (page-aware)
+                        text_chunks = get_text_chunks(pages)
                         vectorstore = get_vectorstore(text_chunks)
 
                         if vectorstore:

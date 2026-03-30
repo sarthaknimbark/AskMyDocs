@@ -1,24 +1,57 @@
 # utils/langchain_utils.py
-# Custom text splitter to avoid langchain_text_splitters import
-# which triggers spacy -> pydantic v1 crash on Python 3.14
+# Page-aware text splitter — chunks within each page so page metadata is never lost.
+# Compatible with Python 3.14 (avoids spacy/pydantic v1 import chain).
 
 
-def get_text_chunks(text, chunk_size=1000, chunk_overlap=200):
-    """Split text into overlapping chunks using recursive splitting.
+def get_text_chunks(pages, chunk_size=1500, chunk_overlap=300):
+    """Split page-aware text into overlapping chunks.
 
-    Uses paragraph -> sentence -> word boundaries for better
-    semantic coherence. Compatible with Python 3.14 (avoids
-    the spacy/pydantic v1 import chain).
+    Args:
+        pages: list of dicts [{"page": int, "file": str, "text": str}, ...]
+        chunk_size: max characters per chunk
+        chunk_overlap: overlap between consecutive chunks
+
+    Returns:
+        list of strings, each prefixed with [Page X] for citation tracking.
     """
-    if not text or not text.strip():
+    if not pages:
         return []
 
-    separators = ["\n\n", "\n", ". ", " "]
+    all_chunks = []
+
+    for page_info in pages:
+        page_num = page_info["page"]
+        page_text = page_info["text"]
+        file_name = page_info.get("file", "")
+
+        if not page_text or not page_text.strip():
+            continue
+
+        # Split this single page into chunks
+        page_chunks = _split_text(page_text, chunk_size, chunk_overlap)
+
+        # Prepend page marker to every chunk from this page
+        for chunk in page_chunks:
+            prefix = f"[Page {page_num}]"
+            if file_name:
+                prefix = f"[{file_name} — Page {page_num}]"
+            all_chunks.append(f"{prefix}\n{chunk}")
+
+    return all_chunks
+
+
+def _split_text(text, chunk_size, chunk_overlap):
+    """Split text into overlapping chunks using recursive separators."""
+    separators = ["\n\n", "\n", ". ", ", ", " "]
     return _recursive_split(text, separators, chunk_size, chunk_overlap)
 
 
 def _recursive_split(text, separators, chunk_size, chunk_overlap):
     """Recursively split text using a hierarchy of separators."""
+    # If text is already small enough, return it as-is
+    if len(text) <= chunk_size:
+        return [text.strip()] if text.strip() else []
+
     final_chunks = []
     separator = separators[-1]  # default: split by space
 

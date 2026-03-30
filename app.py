@@ -59,13 +59,13 @@ def main():
         )
 
         if pdf_docs:
-            if st.button("⚡ Process PDFs", use_container_width=True):
+            if st.button("Process Document", use_container_width=True):
                 with st.spinner("Extracting text & building index..."):
                     # Extract text with page tracking
                     pages, page_count = get_pdf_text(pdf_docs)
 
                     if not pages:
-                        st.error("❌ No text could be extracted from the uploaded PDFs.")
+                        st.error("No text could be extracted from the uploaded PDFs.")
                     else:
                         # Chunk and index (page-aware)
                         text_chunks = get_text_chunks(pages)
@@ -80,13 +80,13 @@ def main():
                                 "pages": page_count,
                                 "chunks": len(text_chunks),
                             }
-                            st.success("✅ Documents processed successfully!")
+                            st.success("Documents processed successfully!")
 
         # Show document stats
         if st.session_state.processed and st.session_state.doc_stats:
             stats = st.session_state.doc_stats
             st.markdown("---")
-            st.markdown("#### 📊 Document Stats")
+            st.markdown("#### Document Stats")
             col1, col2, col3 = st.columns(3)
             col1.metric("Files", stats.get("files", 0))
             col2.metric("Pages", stats.get("pages", 0))
@@ -102,7 +102,7 @@ def main():
 
     # ── Main Chat Area ──────────────────────────────────────
     if st.session_state.processed:
-        st.markdown("### 💬 Ask your documents anything")
+        st.markdown("### Ask your documents anything")
 
         user_question = st.text_input(
             "Type your question here...",
@@ -110,8 +110,8 @@ def main():
             label_visibility="collapsed",
         )
 
-        if st.button("🚀 Ask", use_container_width=False) and user_question:
-            with st.spinner("🔎 Searching documents & generating response..."):
+        if st.button("Ask", use_container_width=False) and user_question:
+            with st.spinner("Searching documents & generating response..."):
                 handle_userinput(user_question, st.session_state.vectorstore)
 
     else:

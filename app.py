@@ -93,7 +93,7 @@ def main():
             col3.metric("Chunks", stats.get("chunks", 0))
 
         st.markdown("---")
-        if st.button("🗑️ Clear Chat", use_container_width=True):
+        if st.button("Clear Chat", use_container_width=True):
             st.session_state.chat_history = []
             st.session_state.processed = False
             st.session_state.vectorstore = None
